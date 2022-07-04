@@ -1,0 +1,27 @@
+create table category(categoryid number primary key,categoryname varchar(25) not null,categorydescription varchar(25));
+
+
+create table admin(adminid varchar(20) primary key,adminpassword varchar(20) not null);
+
+
+create table users(userid varchar(20) primary key,password varchar(20) not null,name varchar(20) not null,address varchar(200) not null,phoneno number(10) not null,birthdate date);
+
+
+
+create table products(productid number primary key,productname varchar(30) not null, price number not null , categoryid number references category(categoryid),company varchar(25),qoh number not null,description varchar(50),imagepath varchar(200) not null);                  
+
+
+
+create table promotionalevent(pid number primary key,eventname varchar(30) not null,eventstartdate date not null,eventenddate date not null,eventdescription date);
+
+
+create table coupon(cid number primary key,cname varchar(25),cdescription varchar(100),pid references promotionalevent(pid),discount number,categoryid references category (categoryid));
+
+
+create table cart(cartid number primary key,userid varchar(25) references users(userid),cartdate date not null);
+
+
+create table payments(payid number primary key,cartid number(30) references cart(cartid),totalbillamount number not null,totaldiscount number not null,cardno varchar(30) not null,cardcvv number not null,cardexpiry date not null,paymentstatus varchar(100));
+
+
+create table cartdetail(cartdetailid number primary key,cartid number references cart(cartid),productid number references products(productid),quantity number not null);
